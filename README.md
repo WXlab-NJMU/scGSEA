@@ -61,7 +61,9 @@ cc.gs
 
 We can use `getGSgenelist` extract a list of genes in geneSet(s) specificed by GeneSetName.
 
-{r} getGSgenelist(cc.gs,"G2M")
+```R
+getGSgenelist(cc.gs,"G2M")
+```
 
 ### **Step 4: Calculate and Normalize Enrichment Scores**
 
@@ -128,7 +130,7 @@ cc.gs
 ```R
 cc.gs <- scCalES(sce, cc.gs)  # Calculate enrichment scores 
 cc.gs <- scESnorm(sce, cc.gs) # Normalize enrichment scores
-cc.gs <- scCalSignif(cc.gs) 
+cc.gs <- scCalSignif(cc.gs)
 cc.gs
 ```
 
