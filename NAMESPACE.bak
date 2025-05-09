@@ -1,0 +1,10 @@
+##Namespace file for scGSEA package
+import(methods, Biobase, SingleCellExperiment, Seurat, scater, scran, ggplot2)
+importFrom(biomaRt, getBM, useMart)
+importFrom(grDevices, rainbow)
+
+export(
+	"scESPlot",
+	"scGSheatmap",
+	"scNESheatmap"
+)

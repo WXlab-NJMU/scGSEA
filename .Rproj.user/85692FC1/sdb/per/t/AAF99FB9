@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "\n###### \n# test\nseurat_obj <- readRDS(\"data/seurat_obj.rds\")\nsce_obj <- readRDS(\"data/sce_obj.rds\")\ngs.file <- \"data/gs.gmt\"\n\nseurat_obj <- scGSEA.scale.data(seurat_obj, kNN=0)\nsce_obj <- scGSEA.scale.data(sce_obj, kNN=0)\ngs_obj <- scLoadGS(geneset.file=gs.file, sc.obj=seurat_obj, geneID.type=\"gene.symbol\", use.HVG=FALSE)\ngs_obj <- scCalES(seurat_obj, gs_obj)\ngs_obj <- scCalES(sce_obj, gs_obj)\ngs_obj <- scESnorm(seurat_obj, gs_obj)\ngs_obj <- scESnorm(sce_obj, gs_obj)\nseurat_obj <- add.scGESA.to.obj(seurat_obj, gs_obj)\nsce_obj <- add.scGESA.to.obj(sce_obj, gs_obj)\n# sce_obj <- add.scGESA.to.obj(sce_obj, gs_obj)\n####\n# plots\n#####\n# FeaturePlot(seurat_obj, features.plot = \"IL.18_pathway2\", cols.use = c(\"blue\", \"cyan\", \"yellow\", \"red\"))\n# FeaturePlot(seurat_obj, features.plot = \"NFkB_pathway\", cols.use = c(\"blue\", \"cyan\", \"yellow\", \"red\"))\n# \n# plotReducedDim(sce_obj, \"TSNE\", colour_by=\"IL.18_pathway2\") + ggtitle(\"IL.18_pathway2\") \n# plotReducedDim(sce_obj, \"TSNE\", colour_by=\"NFkB_pathway\") + ggtitle(\"NFkB_pathway\") \n# \n",
+    "created" : 1544633327308.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2864817166",
+    "id" : "AAF99FB9",
+    "lastKnownWriteTime" : 1544733849,
+    "last_content_update" : 1544733849794,
+    "path" : "~/Google Drive/scGSEA/scGSEA/R/test.R",
+    "project_path" : "R/test.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,67 @@
+library(SeqGSEA)
+library(Seurat)
+library(scran)
+
+###### 
+# # test
+#seurat_obj <- readRDS("data/seurat_obj.rds")
+sce_obj <- readRDS("data/sce_obj.rds")
+gs.file <- "data/gs.gmt"
+
+usethis::use_vignette("my-vignette")
+### GSEA for single-cell RNA-seq
+library(Seurat)
+library(limma)
+library(SeqGSEA)
+library(scGSEA)
+library(scCustomize)
+source("/public2/home/wsheng/Projects/scGSEA/scGSEA.R/scGSEA/R/plotFuncs.R")
+source("/public2/home/wsheng/Projects/scGSEA/scGSEA.R/scGSEA/R/scGSEA.R")
+source("/home/mickey/Projects/scGSEA/scGSEA.R/scGSEA/R/geneSignature.R")
+
+
+# Seurat V4
+### load data set
+load("data/obj.rda")
+
+### normalize expression data
+obj <- scGSEA.scale.data(obj, kNN=51)
+obj@assays$scGSEA@data[1:5,1:5]
+cc.gs <- scLoadGS("../CC.gmt", obj, "gene.symbol", genesetsize.min=2,use.HVG = FALSE)
+
+getGSgenelist(cc.gs,"G2M")
+cc.gs <- scCalES(obj, cc.gs)
+cc.gs <- scESnorm(obj, cc.gs)
+cc.gs <- scCalSignif(cc.gs)
+obj <- add.scGESA.to.obj(obj,cc.gs)
+
+table(cc.gs@sc.ES[1,] > 3, cc.gs@sc.ES[2,] > 3, cc.gs@sc.ES[1,] > cc.gs@sc.ES[2,]) / ncol(cc.gs@sc.ES)
+
+scESPlot(obj, cc.gs)
+
+# Seurat V5
+
+load(file = "data/obj_V5.rda")
+obj_V5<- scGSEA.scale.data(obj_V5, kNN=51)
+cc.gs <- scLoadGS("B_scGSEA/CC.gmt", obj_V5, "gene.symbol", genesetsize.min=2)
+getGSgenelist(cc.gs,"G2M")
+cc.gs <- scCalES(obj_V5, cc.gs)
+cc.gs <- scESnorm(obj_V5, cc.gs)
+cc.gs <- scCalSignif(cc.gs)
+obj_V5 <- add.scGESA.to.obj(obj_V5,cc.gs)
+
+
+# SingleCellExperiment
+load(file = "data/sce.rda")# also sce <-as.SingleCellExperiment(obj)
+sce <- scGSEA.scale.data(sce)
+cc.gs <- scLoadGS("../CC.gmt", sce, "gene.symbol", genesetsize.min=2)
+cc.gs <- scCalES(sce, cc.gs)
+cc.gs <- scESnorm(sce, cc.gs)
+cc.gs <- scCalSignif(cc.gs)
+sce <- add.scGESA.to.obj(sce,cc.gs)
+
+scESPlot(obj,cc.gs)
+
+#scESPlot(obj,cc.gs,gene.set = c("G2M","S"))
+
+
